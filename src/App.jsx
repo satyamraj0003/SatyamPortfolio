@@ -16,6 +16,7 @@ function App() {
   const imageWrapperRef = useRef(null);
 
   const [activeSection, setActiveSection] = useState('hero');
+  const [menuOpen, setMenuOpen] = useState(false);
   const lenisRef = useRef(null);
 
   useEffect(() => {
@@ -37,28 +38,35 @@ function App() {
     }
     requestAnimationFrame(raf);
 
-    // Fixed Scroll Highlight Handler including Contact
-    const handleScroll = () => {
-      const scrollPos = window.scrollY + window.innerHeight / 2;
-      const about = document.getElementById('about');
-      const skills = document.getElementById('skills');
-      const project = document.getElementById('project');
-      const contact = document.getElementById('contact');
 
-      if (contact && scrollPos >= contact.offsetTop) {
-        setActiveSection('contact');
-      } else if (project && scrollPos >= project.offsetTop) {
-        setActiveSection('project');
-      } else if (skills && scrollPos >= skills.offsetTop) {
-        setActiveSection('skills');
-      } else if (about && scrollPos >= about.offsetTop) {
-        setActiveSection('about');
-      } else {
-        setActiveSection('hero');
-      }
-    };
+    const sectionIds = ['hero', 'about', 'skills', 'project', 'contact'];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
 
-    window.addEventListener('scroll', handleScroll);
+    const visibleRatios = new Map();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          visibleRatios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        let bestId = null;
+        let bestRatio = 0;
+        visibleRatios.forEach((ratio, id) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = id;
+          }
+        });
+
+        if (bestId) setActiveSection(bestId);
+      },
+      { threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+
+    sections.forEach((el) => observer.observe(el));
 
     let ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
@@ -73,12 +81,22 @@ function App() {
     return () => {
       ctx.revert();
       lenis.destroy();
-      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
     };
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('.site-navbar')) setMenuOpen(false);
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [menuOpen]);
+
   const scrollToSection = (id) => {
     setActiveSection(id); // Immediate highlight state update on click
+    setMenuOpen(false);
     if (lenisRef.current) {
       lenisRef.current.scrollTo(`#${id}`, { duration: 1.8, easing: (t) => 1 - Math.pow(1 - t, 4) });
     }
@@ -87,7 +105,7 @@ function App() {
   return (
     <div ref={mainRef} style={{ position: 'relative', width: '100%', backgroundColor: '#000000', color: '#ffffff', minHeight: '100vh' }}>
       
-      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 1, backgroundColor: '#000' }}>
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100vh', zIndex: 1, backgroundColor: '#000', pointerEvents: 'none' }}>
         <Galaxy />
       </div>
 
@@ -103,111 +121,80 @@ function App() {
       }} />
 
       {/* NAVBAR */}
-      <nav style={{ 
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        width: '100%', 
-        zIndex: 10, 
-        padding: '25px 60px', 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center',
-        boxSizing: 'border-box'
-      }}>
+      <nav className="site-navbar">
         <h2 
           ref={logoRef} 
-          className="bright-text" 
-          style={{ fontSize: '28px', fontWeight: '900', letterSpacing: '1px', margin: 0, cursor: 'pointer' }} 
+          className="bright-text nav-logo" 
           onClick={() => scrollToSection('hero')}
         >
           PORTFOLIO
         </h2>
 
-        <div 
-          ref={navContainerRef}
-          style={{ 
-            display: 'flex', 
-            alignItems: 'center',
-            gap: '8px', 
-            fontSize: '15px', 
-            fontWeight: '700', 
-            backgroundColor: 'rgba(15, 23, 42, 0.65)',
-            padding: '6px',
-            borderRadius: '40px',
-            backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
-          }}
-        >
+        <div ref={navContainerRef} className="nav-pills">
           <button 
             onClick={() => scrollToSection('about')}
-            style={{
-              background: activeSection === 'about' ? '#00d2ff' : 'transparent',
-              color: activeSection === 'about' ? '#000000' : '#ffffff',
-              border: 'none',
-              padding: '9px 24px',
-              borderRadius: '30px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: activeSection === 'about' ? '0 0 15px rgba(0, 210, 255, 0.8)' : 'none',
-              outline: 'none'
-            }}
+            className={`nav-pill-btn ${activeSection === 'about' ? 'active' : ''}`}
           >
             About
           </button>
 
           <button 
             onClick={() => scrollToSection('skills')}
-            style={{
-              background: activeSection === 'skills' ? '#00d2ff' : 'transparent',
-              color: activeSection === 'skills' ? '#000000' : '#ffffff',
-              border: 'none',
-              padding: '9px 24px',
-              borderRadius: '30px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: activeSection === 'skills' ? '0 0 15px rgba(0, 210, 255, 0.8)' : 'none',
-              outline: 'none'
-            }}
+            className={`nav-pill-btn ${activeSection === 'skills' ? 'active' : ''}`}
           >
             Skills
           </button>
 
           <button 
             onClick={() => scrollToSection('project')}
-            style={{
-              background: activeSection === 'project' ? '#00d2ff' : 'transparent',
-              color: activeSection === 'project' ? '#000000' : '#ffffff',
-              border: 'none',
-              padding: '9px 24px',
-              borderRadius: '30px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: activeSection === 'project' ? '0 0 15px rgba(0, 210, 255, 0.8)' : 'none',
-              outline: 'none'
-            }}
+            className={`nav-pill-btn ${activeSection === 'project' ? 'active' : ''}`}
           >
             Project
           </button>
 
           <button 
             onClick={() => scrollToSection('contact')}
-            style={{
-              background: activeSection === 'contact' ? '#00d2ff' : 'transparent',
-              color: activeSection === 'contact' ? '#000000' : '#ffffff',
-              border: 'none',
-              padding: '9px 24px',
-              borderRadius: '30px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: activeSection === 'contact' ? '0 0 15px rgba(0, 210, 255, 0.8)' : 'none',
-              outline: 'none'
-            }}
+            className={`nav-pill-btn ${activeSection === 'contact' ? 'active' : ''}`}
+          >
+            Contact
+          </button>
+        </div>
+
+        {/* HAMBURGER — shown only on small screens via CSS */}
+        <button
+          className="nav-hamburger"
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        {/* MOBILE DROPDOWN MENU */}
+        <div className={`nav-mobile-menu ${menuOpen ? 'open' : ''}`}>
+          <button
+            onClick={() => scrollToSection('about')}
+            className={`nav-mobile-link ${activeSection === 'about' ? 'active' : ''}`}
+          >
+            About
+          </button>
+          <button
+            onClick={() => scrollToSection('skills')}
+            className={`nav-mobile-link ${activeSection === 'skills' ? 'active' : ''}`}
+          >
+            Skills
+          </button>
+          <button
+            onClick={() => scrollToSection('project')}
+            className={`nav-mobile-link ${activeSection === 'project' ? 'active' : ''}`}
+          >
+            Project
+          </button>
+          <button
+            onClick={() => scrollToSection('contact')}
+            className={`nav-mobile-link ${activeSection === 'contact' ? 'active' : ''}`}
           >
             Contact
           </button>
@@ -215,33 +202,11 @@ function App() {
       </nav>
 
       {/* HERO SECTION */}
-      <main id="hero" style={{ 
-        position: 'relative', 
-        zIndex: 5, 
-        width: '100%', 
-        height: '100vh', 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        padding: '0 80px',
-        boxSizing: 'border-box'
-      }}>
-        <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+      <main id="hero" className="hero-section">
+        <div className="hero-image-side">
           <div 
             ref={imageWrapperRef}
-            className="profile-image-wrapper"
-            style={{ 
-              width: '420px', 
-              height: '420px', 
-              borderRadius: '50%',
-              overflow: 'hidden', 
-              border: '3px solid rgba(0, 210, 255, 0.5)',
-              boxSizing: 'border-box',
-              display: 'flex', 
-              justifyContent: 'center', 
-              alignItems: 'center',
-              backgroundColor: '#050505'
-            }}
+            className="profile-image-wrapper hero-image-circle"
           >
             <img 
               src={myProfileImage} 
@@ -251,15 +216,15 @@ function App() {
           </div>
         </div>
 
-        <div ref={textContentRef} className="bright-text" style={{ flex: '1.2', display: 'flex', flexDirection: 'column', gap: '20px', paddingLeft: '40px' }}>
-          <h3 style={{ fontSize: '22px', fontWeight: '700', color: '#00d2ff', letterSpacing: '2px', textTransform: 'uppercase', margin: 0 }}>
+        <div ref={textContentRef} className="bright-text hero-text-side">
+          <h3 className="hero-eyebrow">
             Welcome to my space
           </h3>
-          <h1 style={{ fontSize: '62px', fontWeight: '900', lineHeight: '1.1', margin: 0, color: '#ffffff' }}>
+          <h1 className="hero-title">
             Hello, I am <br />
             <span className="highlight-blue">Satyam Raj</span>
           </h1>
-          <p style={{ fontSize: '19px', lineHeight: '1.6', color: '#e0e0e0', fontWeight: '500', maxWidth: '580px' }}>
+          <p className="hero-desc">
             A creative Full-Stack Developer specialized in building interactive front-ends and high-performance backend web architectures.
           </p>
         </div>

@@ -78,12 +78,10 @@ const Projects = () => {
         >
           <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '35px' }}>
             <h2 
+              className="parchment-heading"
               style={{ 
                 fontFamily: '"Georgia", "Brush Script MT", cursive', 
-                fontSize: '42px', 
                 color: '#6e1005',
-                letterSpacing: '1.5px',
-                margin: 0,
                 transform: 'rotate(-1.5deg)',
                 borderBottom: '2px dashed #6e1005',
                 paddingBottom: '6px'

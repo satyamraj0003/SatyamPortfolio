@@ -107,12 +107,9 @@ const Contact = () => {
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '35px' }}>
             <h2 
+              className="parchment-heading"
               style={{ 
-                fontFamily: '"Georgia", serif', 
-                fontSize: '40px', 
                 color: '#6e1005',
-                letterSpacing: '1.5px',
-                margin: 0,
                 transform: 'rotate(-1deg)',
                 borderBottom: '2px dashed #6e1005',
                 paddingBottom: '6px'
