@@ -1,4 +1,5 @@
 import React from 'react';
+import ScaleFit from './ScaleFit';
 
 const skillsList = [
   {
@@ -75,38 +76,39 @@ const Skills = () => {
       }}
     >
       {/* OUTER BACK-PAGE CONTAINER (Unique Midnight Obsidian & Antique Bronze Theme) */}
+      <ScaleFit width={1000}>
       <div 
         style={{
           width: '100%',
-          maxWidth: '1000px',
           background: 'linear-gradient(135deg, #0d1117 0%, #16120c 100%)',
           borderRadius: '24px',
           padding: '28px',
           boxShadow: '0 30px 70px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(212, 175, 55, 0.1)',
           border: '1.5px solid rgba(212, 175, 55, 0.3)',
-          transform: 'rotate(0.5deg)'
+          transform: 'rotate(0.5deg)',
+          boxSizing: 'border-box'
         }}
       >
-        {/* INNER BURNT/TORN PARCHMENT PAPER */}
+        {/* INNER WHISKEY SOUR PARCHMENT */}
         <div 
           style={{
             position: 'relative',
             width: '100%',
-            backgroundColor: '#d8b889',
+            backgroundColor: '#D39858',
             backgroundImage: `
-              radial-gradient(circle at 50% 50%, rgba(245, 222, 179, 0.95) 0%, rgba(193, 154, 107, 0.85) 65%, rgba(90, 55, 25, 0.85) 100%)
+              radial-gradient(circle at 50% 50%, #fff2df 0%, #e8b877 55%, #D39858 100%)
             `,
             padding: '50px 45px',
             boxSizing: 'border-box',
             color: '#2b1810',
-            boxShadow: 'inset 0 0 50px rgba(45, 20, 5, 0.9)',
+            boxShadow: 'inset 0 0 50px rgba(90, 55, 15, 0.6)',
             clipPath: 'polygon(0% 2%, 3% 0%, 97% 1%, 100% 3%, 98% 12%, 100% 25%, 97% 38%, 99% 52%, 97% 68%, 100% 82%, 97% 96%, 94% 100%, 3% 98%, 0% 95%, 2% 82%, 0% 66%, 2% 50%, 0% 32%, 3% 16%)',
             filter: 'drop-shadow(0px 10px 15px rgba(0,0,0,0.8))'
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '35px' }}>
             <h2 
-              className="parchment-heading"
+              className="heading-skills"
               style={{ 
                 color: '#6e1005',
                 transform: 'rotate(-1.5deg)',
@@ -169,32 +171,44 @@ const Skills = () => {
                   }
                 }}
               >
-                <img 
-                  src={skill.iconUrl} 
-                  alt={skill.name} 
+                <div
+                  className="skill-float"
                   style={{
-                    width: '50px',
-                    height: '50px',
-                    objectFit: 'contain',
-                    transition: 'filter 0.3s ease, transform 0.3s ease'
-                  }}
-                />
-                <span 
-                  style={{ 
-                    fontFamily: '"Georgia", serif', 
-                    fontSize: '16px', 
-                    fontWeight: 'bold', 
-                    color: '#3d1c06' 
+                    animationDelay: `${index * 0.18}s`,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '12px'
                   }}
                 >
-                  {skill.name}
-                </span>
+                  <img 
+                    src={skill.iconUrl} 
+                    alt={skill.name} 
+                    style={{
+                      width: '50px',
+                      height: '50px',
+                      objectFit: 'contain',
+                      transition: 'filter 0.3s ease, transform 0.3s ease'
+                    }}
+                  />
+                  <span 
+                    style={{ 
+                      fontFamily: '"Georgia", serif', 
+                      fontSize: '16px', 
+                      fontWeight: 'bold', 
+                      color: '#3d1c06' 
+                    }}
+                  >
+                    {skill.name}
+                  </span>
+                </div>
               </div>
             ))}
           </div>
 
         </div>
       </div>
+      </ScaleFit>
     </section>
   );
 };

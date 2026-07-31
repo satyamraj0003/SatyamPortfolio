@@ -222,7 +222,7 @@ function App() {
           </h3>
           <h1 className="hero-title">
             Hello, I am <br />
-            <span className="highlight-blue">Satyam Raj</span>
+            <span className="highlight-blue name-cursive">Satyam Raj</span>
           </h1>
           <p className="hero-desc">
             A creative Full-Stack Developer specialized in building interactive front-ends and high-performance backend web architectures.

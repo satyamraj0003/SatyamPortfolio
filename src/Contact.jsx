@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import ScaleFit from './ScaleFit';
 
 const contactLinks = [
   {
@@ -77,41 +78,42 @@ const Contact = () => {
         boxSizing: 'border-box'
       }}
     >
+      <ScaleFit width={1000}>
       <div 
         style={{
           width: '100%',
-          maxWidth: '1000px',
           background: 'linear-gradient(135deg, #150f0c 0%, #0d0907 100%)',
           borderRadius: '24px',
           padding: '28px',
           boxShadow: '0 30px 70px rgba(0, 0, 0, 0.95), inset 0 0 20px rgba(180, 120, 60, 0.1)',
           border: '1.5px solid rgba(180, 120, 60, 0.3)',
-          transform: 'rotate(-0.5deg)'
+          transform: 'rotate(-0.5deg)',
+          boxSizing: 'border-box'
         }}
       >
         <div 
           style={{
             position: 'relative',
             width: '100%',
-            backgroundColor: '#d8b889',
+            backgroundColor: '#34150F',
             backgroundImage: `
-              radial-gradient(circle at 50% 50%, rgba(245, 222, 179, 0.95) 0%, rgba(193, 154, 107, 0.85) 65%, rgba(90, 55, 25, 0.85) 100%)
+              radial-gradient(circle at 50% 50%, #6b3521 0%, #481d12 55%, #34150F 100%)
             `,
             padding: '50px 40px',
             boxSizing: 'border-box',
-            color: '#2b1810',
-            boxShadow: 'inset 0 0 50px rgba(45, 20, 5, 0.9)',
+            color: '#f5e6d3',
+            boxShadow: 'inset 0 0 50px rgba(10, 5, 2, 0.9)',
             clipPath: 'polygon(0% 2%, 3% 0%, 97% 1%, 100% 3%, 98% 12%, 100% 25%, 97% 38%, 99% 52%, 97% 68%, 100% 82%, 97% 96%, 94% 100%, 3% 98%, 0% 95%, 2% 82%, 0% 66%, 2% 50%, 0% 32%, 3% 16%)',
             filter: 'drop-shadow(0px 10px 15px rgba(0,0,0,0.8))'
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '35px' }}>
             <h2 
-              className="parchment-heading"
+              className="heading-contact"
               style={{ 
-                color: '#6e1005',
+                color: '#e8a34a',
                 transform: 'rotate(-1deg)',
-                borderBottom: '2px dashed #6e1005',
+                borderBottom: '2px dashed #e8a34a',
                 paddingBottom: '6px'
               }}
             >
@@ -129,7 +131,7 @@ const Contact = () => {
           >
             {/* LEFT SIDE: LINKS */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-              <p style={{ fontFamily: '"Georgia", serif', fontSize: '18px', margin: 0, color: '#3d1c06', lineHeight: '1.5' }}>
+              <p style={{ fontFamily: '"Georgia", serif', fontSize: '18px', margin: 0, color: '#f5e6d3', lineHeight: '1.5' }}>
                 Feel free to connect for opportunities, collaborations, or just a friendly chat over coffee! ☕
               </p>
 
@@ -289,6 +291,7 @@ const Contact = () => {
 
         </div>
       </div>
+      </ScaleFit>
     </section>
   );
 };

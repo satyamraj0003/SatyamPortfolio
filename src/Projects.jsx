@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import ScaleFit from './ScaleFit';
 import charityLogo from './assets/CharityLogo.jpg';
 
 const projectsList = [
@@ -47,43 +48,43 @@ const Projects = () => {
         boxSizing: 'border-box'
       }}
     >
+      <ScaleFit width={1000}>
       <div 
         style={{
           width: '100%',
-          maxWidth: '1000px',
           backgroundColor: '#1b120c',
           borderRadius: '24px',
           padding: '30px',
           boxShadow: '0 25px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(205, 168, 122, 0.2)',
           border: '1px solid rgba(205, 168, 122, 0.3)',
-          transform: 'rotate(-0.5deg)'
+          transform: 'rotate(-0.5deg)',
+          boxSizing: 'border-box'
         }}
       >
-        {/* BURNT & TORN PARCHMENT PAPER WITH CLIP-PATH */}
+        {/* HONEY GARLIC PARCHMENT WITH CLIP-PATH */}
         <div 
           style={{
             position: 'relative',
             width: '100%',
-            backgroundColor: '#d8b889',
+            backgroundColor: '#85431E',
             backgroundImage: `
-              radial-gradient(circle at 50% 50%, rgba(245, 222, 179, 0.95) 0%, rgba(193, 154, 107, 0.85) 65%, rgba(90, 55, 25, 0.85) 100%)
+              radial-gradient(circle at 50% 50%, #f3dcb8 0%, #b06f38 55%, #85431E 100%)
             `,
             padding: '50px 45px',
             boxSizing: 'border-box',
-            color: '#2b1810',
-            boxShadow: 'inset 0 0 50px rgba(45, 20, 5, 0.9)',
+            color: '#fff3e0',
+            boxShadow: 'inset 0 0 50px rgba(40, 20, 5, 0.7)',
             clipPath: 'polygon(0% 2%, 3% 0%, 97% 1%, 100% 3%, 98% 12%, 100% 25%, 97% 38%, 99% 52%, 97% 68%, 100% 82%, 97% 96%, 94% 100%, 3% 98%, 0% 95%, 2% 82%, 0% 66%, 2% 50%, 0% 32%, 3% 16%)',
             filter: 'drop-shadow(0px 10px 15px rgba(0,0,0,0.8))'
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '35px' }}>
             <h2 
-              className="parchment-heading"
+              className="heading-projects"
               style={{ 
-                fontFamily: '"Georgia", "Brush Script MT", cursive', 
-                color: '#6e1005',
+                color: '#3a1c05',
                 transform: 'rotate(-1.5deg)',
-                borderBottom: '2px dashed #6e1005',
+                borderBottom: '2px dashed #3a1c05',
                 paddingBottom: '6px'
               }}
             >
@@ -206,6 +207,7 @@ const Projects = () => {
 
         </div>
       </div>
+      </ScaleFit>
     </section>
   );
 };

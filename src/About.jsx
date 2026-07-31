@@ -1,4 +1,5 @@
 import React from 'react';
+import ScaleFit from './ScaleFit';
 
 const About = () => {
   return (
@@ -16,40 +17,41 @@ const About = () => {
         boxSizing: 'border-box'
       }}
     >
+      <ScaleFit width={880}>
       {/* OUTER DEEP COSMIC MATTE CARD */}
       <div 
         style={{
           width: '100%',
-          maxWidth: '880px',
           backgroundColor: '#130d24',
           borderRadius: '16px',
           padding: '35px',
           boxShadow: '0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(112, 0, 255, 0.2)',
           border: '1px solid rgba(138, 43, 226, 0.3)',
           transform: 'rotate(-1deg)',
-          transition: 'all 0.5s ease'
+          transition: 'all 0.5s ease',
+          boxSizing: 'border-box'
         }}
       >
-        {/* VINTAGE COFFEE BURNT PAPER */}
+        {/* VINTAGE CHAMPAGNE PARCHMENT */}
         <div 
           className="burnt-paper"
           style={{
             position: 'relative',
             width: '100%',
-            backgroundColor: '#cda87a',
+            backgroundColor: '#EACEAA',
             backgroundImage: `
-              radial-gradient(circle at 50% 50%, rgba(245, 222, 179, 0.9) 0%, rgba(193, 154, 107, 0.85) 60%, rgba(101, 67, 33, 0.8) 100%)
+              radial-gradient(circle at 50% 50%, #fff8ec 0%, #f2ddba 55%, #EACEAA 100%)
             `,
             padding: '45px 50px',
             boxSizing: 'border-box',
             color: '#2b1810',
-            boxShadow: 'inset 0 0 30px rgba(45, 20, 5, 0.8)',
+            boxShadow: 'inset 0 0 30px rgba(120, 90, 50, 0.5)',
             borderRadius: '4px'
           }}
         >
           {/* TOP RIGHT TITLE */}
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
-            <h2 className="parchment-title" style={{ transform: 'rotate(2deg)' }}>
+            <h2 className="heading-about" style={{ transform: 'rotate(2deg)' }}>
               About Me...
             </h2>
           </div>
@@ -57,7 +59,7 @@ const About = () => {
           {/* PARCHMENT BODY TEXT MATCHING YOUR TECH STACK */}
           <div className="parchment-body">
             <p style={{ marginBottom: '16px' }}>
-              Greetings, Traveler! 👋 I'm <strong className="parchment-strong-lg">Satyam Raj</strong>, a passionate Software & Full-Stack Web Developer dedicated to building high-performance applications.
+              Greetings, Traveler! 👋 I'm <strong className="parchment-strong-lg name-cursive">Satyam Raj</strong>, a passionate Software & Full-Stack Web Developer dedicated to building high-performance applications.
             </p>
             <p style={{ marginBottom: '16px' }}>
               My expertise bridges both modern front-end user experiences and robust enterprise back-end architectures. I specialize in crafting interactive UIs using <strong className="parchment-strong">React, Angular, GSAP</strong>, and scalable backends using <strong className="parchment-strong">.NET, C#, and SQL Databases</strong>.
@@ -69,6 +71,7 @@ const About = () => {
 
         </div>
       </div>
+      </ScaleFit>
     </section>
   );
 };

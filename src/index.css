@@ -422,42 +422,79 @@ html.lenis, html.lenis body {
   }
 }
 
-/* 8. Responsive parchment typography (About/Skills/Projects/Contact headings & body) */
-.parchment-title {
-  font-family: "Georgia", "Brush Script MT", cursive;
-  font-size: clamp(22px, 6vw, 40px);
+/* 8. Distinct typography per section (each section gets its own font,
+      so nothing looks "common" — only the name is cursive) */
+
+/* The name "Satyam Raj" — cursive, everywhere it appears */
+.name-cursive {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: 1.15em;
+}
+
+/* About heading — elegant engraved serif */
+.heading-about {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 40px;
   color: #8b0000;
   letter-spacing: 1.5px;
   margin: 0;
 }
 
-.parchment-heading {
-  font-family: "Georgia", serif;
-  font-size: clamp(20px, 5.5vw, 42px);
-  letter-spacing: 1.5px;
+/* Skills heading — bold modern sans, contrasts with the parchment */
+.heading-skills {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 38px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Projects heading — strong literary serif */
+.heading-projects {
+  font-family: 'Merriweather', serif;
+  font-weight: 900;
+  font-size: 34px;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Contact heading — dramatic display serif */
+.heading-contact {
+  font-family: 'Abril Fatface', serif;
+  font-weight: 400;
+  font-size: 38px;
+  letter-spacing: 0.5px;
   margin: 0;
 }
 
 .parchment-body {
   font-family: "Georgia", serif;
-  font-size: clamp(14px, 2.4vw, 18px);
+  font-size: 18px;
   line-height: 1.7;
   font-weight: 500;
 }
 
 .parchment-strong-lg {
   color: #501400;
-  font-size: clamp(15px, 2.6vw, 20px);
+  font-size: 20px;
 }
 
 .parchment-strong {
   color: #501400;
 }
 
-@media (max-width: 480px) {
-  .parchment-body {
-    line-height: 1.6;
-  }
+/* Gentle floating motion for skill cards — smooth & staggered, not shaky */
+@keyframes skillFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.skill-float {
+  animation: skillFloat 3.2s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Custom Scrollbar */
